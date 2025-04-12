@@ -229,7 +229,7 @@
         <p>But this boom is short-lived - U.S. share collapsed from 14% in 2020 to just 6% in 2024, and Brazil and Spain dominate the China market.</p>
       </div>
       <div class="step" id="step4">
-        <p>Trade tensions and higher tariffs made U.S. pork less competitive, with market share dropping to 7.7% by 2022.</p>
+        <p>“The U.S. now pays 25% higher duties than Brazil, also Brazil has lower production costs,” as noted by Professor Dermot Hayes, an agriculture economist from Iowa State University. </p>
       </div>
 
     </div>
@@ -273,13 +273,7 @@
         })
         .onStepExit(({ element }) => {
           element.classList.remove('active');
-          
-          // Revert to original chart when scrolling back past step3
-          if(element.id === "step3") {
-            document.querySelector('#chart1').style.opacity = 1;
-            document.querySelector('#chart2').style.opacity = 0;
-          }
-        });
+
 
       window.addEventListener("resize", scroller.resize);
     })();
