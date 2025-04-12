@@ -95,16 +95,61 @@
       background: #fff880;
     }
 
-    /* margin on mobile */
-    @media (max-width: 640px) {
-      body {
-        font-size: 18px;
-      }
+    /* Main container layout */
+    .scrolly-container {
+        display: flex;
+        width: 100%;
+        gap: 20px; /* Space between chart and steps */
+    }
 
-      .content {
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-      }
+    /* Chart container (left side) */
+    .sticky-thing {
+        position: sticky;
+        top: 0;
+        width: 60%; /* Takes 60% of page width */
+        height: 100vh; /* Full viewport height */
+        display: flex;
+        align-items: center; /* Vertically center */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Datawrapper iframe adjustments */
+    .sticky-thing iframe {
+        width: 100% !important;
+        height: 80vh !important; /* Slightly less than full height for padding */
+        border: none;
+    }
+
+    /* Steps container (right side) */
+    .steps-container {
+        width: 40%; /* Takes remaining 40% */
+        padding-right: 20px;
+    }
+
+    /* Step adjustments */
+    .step {
+        margin-bottom: 50vh;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.8); /* Optional: make text more readable */
+    }
+
+    /* Responsive adjustment for smaller screens */
+    @media (max-width: 768px) {
+        .scrolly-container {
+        flex-direction: column;
+        }
+        .sticky-thing, .steps-container {
+        width: 100%;
+        }
+        .sticky-thing {
+        height: auto;
+        position: relative;
+        }
+        .sticky-thing iframe {
+        height: 400px !important;
+        }
+
     }
   </style>
   <link href="scrolly-styles.css" rel="stylesheet">
