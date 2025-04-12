@@ -163,42 +163,45 @@
       transform: translateY(-50%);
     }
 
-        /* Responsive design - Mobile layout */
+    /* Responsive design - Mobile layout */
     @media (max-width: 900px) {
     .scrolly-container {
         flex-direction: column;
-        display: block; /* Change from flex to block layout */
+        display: block;
     }
 
     .sticky-thing {
-        position: relative; /* Remove sticky behavior */
+        position: relative;
         width: 100%;
         height: auto;
         display: block;
         margin-bottom: 2em;
-        overflow: visible; /* Allow content to flow normally */
+        overflow: visible;
     }
 
-    /* Display both charts stacked */
-    .chart-container {
-        position: relative !important; /* Override absolute positioning */
+    /* Show only chart2 on mobile */
+    #chart1 {
+        display: none !important;
+    }
+    
+    #chart2 {
+        position: relative !important;
         width: 100% !important;
-        height: 400px !important; /* Fixed height for each chart */
+        height: 80vh !important; /* Full viewport height */
+        opacity: 1 !important;
         margin-bottom: 1em;
-        opacity: 1 !important; /* Force both charts visible */
-        z-index: auto !important;
     }
 
-    /* Maintain iframe sizing */
+    /* Full-width iframe */
     .sticky-thing iframe {
-        height: 100% !important;
         width: 100% !important;
+        height: 100% !important;
     }
 
-    /* Steps container comes after charts */
+    /* Steps container */
     .steps-container {
         width: 100%;
-        order: 2; /* Ensure steps appear after charts */
+        order: 2;
         padding-right: 0;
     }
 
@@ -210,13 +213,6 @@
         background: rgba(255, 255, 255, 0.95);
         border-left: 4px solid #e74c3c;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    /* Keep transition effects but make them horizontal instead of vertical */
-    .step.active {
-        background: rgba(255, 255, 255, 0.98);
-        transform: scale(1.02) !important;
-        transition: all 0.3s ease;
     }
     }
   </style>
@@ -289,6 +285,13 @@
       const scroller = scrollama();
       let chart2Active = false;
       
+      // Initialize based on screen size
+      if (window.innerWidth <= 900) {
+        // Mobile - show only chart2
+        document.querySelector('#chart1').style.display = 'none';
+        document.querySelector('#chart2').style.opacity = 1;
+      }
+      
       scroller
         .setup({
           parent: document.querySelector("#scrolly-images"),
@@ -298,8 +301,8 @@
         .onStepEnter(({ element }) => {
           element.classList.add('active');
           
-          // Switch to chart2 at step2 and keep it through steps 3/4
-          if(element.id === "step2") {
+          // Only switch charts on desktop
+          if(window.innerWidth > 900 && element.id === "step2") {
             document.querySelector('#chart1').style.opacity = 0;
             document.querySelector('#chart2').style.opacity = 1;
             chart2Active = true;
@@ -308,15 +311,28 @@
         .onStepExit(({ element }) => {
           element.classList.remove('active');
           
-          // Only revert to chart1 when scrolling back past step2
-          if(element.id === "step2" && chart2Active) {
+          // Only revert on desktop
+          if(window.innerWidth > 900 && element.id === "step2" && chart2Active) {
             document.querySelector('#chart1').style.opacity = 1;
             document.querySelector('#chart2').style.opacity = 0;
             chart2Active = false;
           }
         });
   
-      window.addEventListener("resize", scroller.resize);
+      // Handle window resize
+      window.addEventListener("resize", () => {
+        scroller.resize();
+        if (window.innerWidth <= 900) {
+          // Mobile - show only chart2
+          document.querySelector('#chart1').style.display = 'none';
+          document.querySelector('#chart2').style.opacity = 1;
+        } else {
+          // Desktop - restore both charts
+          document.querySelector('#chart1').style.display = 'block';
+          document.querySelector('#chart1').style.opacity = 1;
+          document.querySelector('#chart2').style.opacity = 0;
+        }
+      });
     })();
   </script>
 </body>
