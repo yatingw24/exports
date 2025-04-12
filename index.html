@@ -163,29 +163,61 @@
       transform: translateY(-50%);
     }
 
-    /* Responsive design */
+        /* Responsive design - Mobile layout */
     @media (max-width: 900px) {
-      .scrolly-container {
+    .scrolly-container {
         flex-direction: column;
-      }
-      .sticky-thing, .steps-container {
+        display: block; /* Change from flex to block layout */
+    }
+
+    .sticky-thing {
+        position: relative; /* Remove sticky behavior */
         width: 100%;
-      }
-      .sticky-thing {
         height: auto;
-        position: relative;
-        margin-bottom: 0;
-      }
-      .sticky-thing iframe {
-        height: 500px !important;
-      }
-      .steps-container {
-        justify-content: flex-start;
-      }
-      .step {
-        margin: 20px 0;
-        transform: none;
-      }
+        display: block;
+        margin-bottom: 2em;
+        overflow: visible; /* Allow content to flow normally */
+    }
+
+    /* Display both charts stacked */
+    .chart-container {
+        position: relative !important; /* Override absolute positioning */
+        width: 100% !important;
+        height: 400px !important; /* Fixed height for each chart */
+        margin-bottom: 1em;
+        opacity: 1 !important; /* Force both charts visible */
+        z-index: auto !important;
+    }
+
+    /* Maintain iframe sizing */
+    .sticky-thing iframe {
+        height: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Steps container comes after charts */
+    .steps-container {
+        width: 100%;
+        order: 2; /* Ensure steps appear after charts */
+        padding-right: 0;
+    }
+
+    /* Step styling */
+    .step {
+        margin: 1.5em 0 !important;
+        padding: 20px;
+        transform: none !important;
+        background: rgba(255, 255, 255, 0.95);
+        border-left: 4px solid #e74c3c;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Keep transition effects but make them horizontal instead of vertical */
+    .step.active {
+        background: rgba(255, 255, 255, 0.98);
+        transform: scale(1.02) !important;
+        transition: all 0.3s ease;
+    }
     }
   </style>
 </head>
