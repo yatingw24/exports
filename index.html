@@ -267,7 +267,7 @@
     <p>As China’s domestic pork supply recovered, slashing import demand. The total value of imports plummeted sharply, from 12 billion USD in 2020 to 2.1 billion in 2024. </p>
  
     <figure>
-        <iframe src="https://datawrapper.dwcdn.net/XkV0Y/8/" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+        <iframe src="https://datawrapper.dwcdn.net/XkV0Y/8/" width="100%" height="100%"></iframe>
     </figure>
     
     <p>“There has been an oversupply in the China pork market now,” said Dr. Chenjun Pan, a senior analyst for the Chinese agriculture section from Rabobank. As a result, she continued, “U.S. pork export gradually lost its market competitiveness.”</p>
@@ -282,21 +282,27 @@
   <script>
     (() => {
       const scroller = scrollama();
-      let activeStep = null;
+      let currentChart = 'chart1'; // Track current chart state
       
+      function setChart(chart) {
+        if (currentChart === chart) return;
+        currentChart = chart;
+        document.querySelector('#chart1').style.opacity = chart === 'chart1' ? 1 : 0;
+        document.querySelector('#chart2').style.opacity = chart === 'chart2' ? 1 : 0;
+      }
+  
       // Initialize based on screen size
       function initCharts() {
         if (window.innerWidth <= 900) {
           // Mobile - show only chart2
           document.querySelector('#chart1').style.display = 'none';
           document.querySelector('#chart2').style.display = 'block';
-          document.querySelector('#chart2').style.opacity = 1;
+          setChart('chart2');
         } else {
           // Desktop - show both, start with chart1
           document.querySelector('#chart1').style.display = 'block';
           document.querySelector('#chart2').style.display = 'block';
-          document.querySelector('#chart1').style.opacity = 1;
-          document.querySelector('#chart2').style.opacity = 0;
+          setChart('chart1');
         }
       }
       
@@ -307,25 +313,33 @@
         .setup({
           parent: document.querySelector("#scrolly-images"),
           step: ".step",
-          offset: 0.6
+          offset: 0.6,
+          progress: true // Enable progress tracking
+        })
+        .onStepProgress(({ element, index, progress }) => {
+          // Smooth transition between steps
+          if (window.innerWidth > 900) {
+            if (index >= 1) { // From step2 onward
+              setChart('chart2');
+            } else if (index === 0 && progress < 0.5) {
+              setChart('chart1');
+            }
+          }
         })
         .onStepEnter(({ element, index }) => {
           element.classList.add('active');
-          activeStep = index;
           
-          // Desktop behavior - switch to chart2 at step2 and keep it
-          if(window.innerWidth > 900 && index >= 1) {
-            document.querySelector('#chart1').style.opacity = 0;
-            document.querySelector('#chart2').style.opacity = 1;
+          // Desktop - switch to chart2 at step2 and keep it
+          if (window.innerWidth > 900 && index >= 1) {
+            setChart('chart2');
           }
         })
         .onStepExit(({ element, index }) => {
           element.classList.remove('active');
           
-          // Desktop behavior - revert only when going back to step1 or before
-          if(window.innerWidth > 900 && index <= 1) {
-            document.querySelector('#chart1').style.opacity = 1;
-            document.querySelector('#chart2').style.opacity = 0;
+          // Desktop - revert only when going back to step1
+          if (window.innerWidth > 900 && index === 0) {
+            setChart('chart1');
           }
         });
   
