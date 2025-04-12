@@ -123,16 +123,7 @@
       height: 80vh !important; /* Fits viewport without scrolling */
       border: none;
     }
-  
-    /* Chart caption styling */
-    .sticky-thing figcaption {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #666;
-      padding: 10px 20px;
-      line-height: 1.4;
-      max-width: 90%;
-    }
+
   
     /* Steps container (right side) */
     .steps-container {
@@ -151,7 +142,38 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       transform: translateY(-50%); /* Precise vertical alignment */
     }
-  
+
+        /* Previous styles remain the same, but add: */
+    .sticky-thing {
+        position: relative;
+        height: 100vh;
+    }
+    
+    .chart-container {
+        position: absolute;
+        width: 100%;
+        height: 80vh;
+        transition: opacity 0.5s ease;
+    }
+    
+    #chart1 {
+        opacity: 1;
+        z-index: 2;
+    }
+    
+    #chart2 {
+        opacity: 0;
+        z-index: 1;
+    }
+    
+    .step.active ~ .sticky-thing #chart1 {
+        opacity: 0;
+    }
+    
+    .step.active ~ .sticky-thing #chart2 {
+        opacity: 1;
+    }
+    
     /* Responsive design */
     @media (max-width: 900px) {
       .scrolly-container {
@@ -198,33 +220,30 @@
     <p>In the past decade, the U.S. has been one of China’s top pork suppliers, exporting both muscle meat and edible offals like pig feet. But that trade relationship is now under threat. After President Trump raised the total tariff to 104% on all Chinese imports, China retaliated with another round of tariff, resulting in a total 84% tariff on imported U.S. goods, according to the Office of the Tariff Commission of the State Council.</p>
 
   </div>
-  
-  <section id="scrolly-images" class="scrolly-container">
-    <div class="sticky-thing">
-      <figure>
-        <iframe src="https://datawrapper.dwcdn.net/X2Int/1/" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
-    </div>
-    
-    <div class="steps-container">
-      <div class="step" id="step1">
-        <p>The U.S. emerged as a top beneficiary during the African Swine Fever crisis between 2019 and 2020, when the supply shock turned China into the world’s largest pork importer overnight.</p>
-      </div>
-    </div>
-  </section>
+
 
   <section id="scrolly-images" class="scrolly-container">
     <div class="sticky-thing">
-      <figure>
-        <iframe src="https://datawrapper.dwcdn.net/XkV0Y/8/" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
-      </figure>
+      <div class="chart-container" id="chart1">
+        <iframe src="https://datawrapper.dwcdn.net/CHART1_ID/" width="100%" height="100%" frameborder="0"></iframe>
+      </div>
+      <div class="chart-container" id="chart2">
+        <iframe src="https://datawrapper.dwcdn.net/CHART2_ID/" width="100%" height="100%" frameborder="0"></iframe>
+      </div>
+      <figcaption>U.S. Pork Lean Cut Exports to China (2016–2024)</figcaption>
     </div>
     
     <div class="steps-container">
       <div class="step" id="step1">
-        <p>In 2020, U.S.’ exports of fresh, chilled and frozen pork meat peaked at 14% of China’s imports - briefly becoming its second-largest pork supplier after Spain. </p>
+        <p>Initial market conditions...</p>
       </div>
+      <div class="step" id="step2">
+        <p>African Swine Fever impact...</p>
+      </div>
+      <!-- Add more steps as needed -->
     </div>
   </section>
+
 
 
   <div class="content">
@@ -251,61 +270,37 @@
   </div>
 
   <script>
-    /*************
-    
-    This is the JavaScript that makes the scrolly work 
-    
-    *************/
-
-    /* 
-    This part attaches a scroll to the element with id="scrolly-images"    
-    */
     (() => {
-    const scroller = scrollama();
-    scroller
+      const scroller = scrollama();
+      
+      scroller
         .setup({
-        parent: document.querySelector("#scrolly-images"),
-        step: ".step",
-        offset: 0.5 // Center trigger point
+          parent: document.querySelector("#scrolly-images"),
+          step: ".step",
+          offset: 0.6
         })
         .onStepEnter(({ element }) => {
-        element.classList.add('active');
+          element.classList.add('active');
+          
+          // Switch to highlighted chart at specific step
+          if(element.id === "step3") { // Change this to your trigger step
+            document.querySelector('#chart1').style.opacity = 0;
+            document.querySelector('#chart2').style.opacity = 1;
+          }
         })
         .onStepExit(({ element }) => {
-        element.classList.remove('active');
+          element.classList.remove('active');
+          
+          // Revert to original chart when scrolling back
+          if(element.id === "step3") {
+            document.querySelector('#chart1').style.opacity = 1;
+            document.querySelector('#chart2').style.opacity = 0;
+          }
         });
-    window.addEventListener("resize", scroller.resize);
+  
+      window.addEventListener("resize", scroller.resize);
     })();
-
-    /*
-    This part sets up your actions. In this case, it's changing the image in the scrolly container.
-    */
-    d3.select("#step1").on('stepin', (e) => {
-      d3.select(e.target.closest(".scrolly-container")).select("img").attr("src", "image1.jpg")
-    })
-
-    d3.select("#step2").on('stepin', (e) => {
-      d3.select(e.target.closest(".scrolly-container")).select("img").attr("src", "image2.jpg")
-    })
-
-    d3.select("#step3").on('stepin', (e) => {
-      d3.select(e.target.closest(".scrolly-container")).select("img").attr("src", "image1.jpg")
-    })
-
-    d3.select("#step4").on('stepin', (e) => {
-      d3.select(e.target.closest(".scrolly-container")).select("img").attr("src", "image2.jpg")
-    })
-
-    d3.select("#step5").on('stepin', (e) => {
-      d3.select(e.target.closest(".scrolly-container")).select("img").attr("src", "image1.jpg")
-    })
   </script>
-  <style>
-    /* Change this to adjust the padding between steps */
-    .step {
-      margin-bottom: 70vh;
-    }
-  </style>
 
 </body>
 
