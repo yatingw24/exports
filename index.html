@@ -4,14 +4,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Story template</title>
+  <title>U.S. Pork Exports to China</title>
 
   <!-- Google fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     rel="stylesheet">
+
+  <!-- Scrollama and D3 -->
+  <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/3.2.0/scrollama.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -95,7 +100,7 @@
       background: #fff880;
     }
 
-    /* Main container layout */
+    /* Scrollytelling styles */
     .scrolly-container {
       display: flex;
       width: 100%;
@@ -103,8 +108,7 @@
       margin: 0 auto;
       gap: 30px;
     }
-  
-    /* Chart container (left side) */
+
     .sticky-thing {
       position: sticky;
       top: 0;
@@ -114,66 +118,51 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      overflow: hidden; /* Prevent scrollbar */
-    }
-  
-    /* Datawrapper iframe adjustments */
-    .sticky-thing iframe {
-      width: 100% !important;
-      height: 80vh !important; /* Fits viewport without scrolling */
-      border: none;
+      overflow: hidden;
+      z-index: 10;
     }
 
-  
-    /* Steps container (right side) */
+    .chart-container {
+      position: absolute;
+      width: 100%;
+      height: 80vh;
+      transition: opacity 0.5s ease;
+    }
+
+    #chart1 {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    #chart2 {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .step.active ~ .sticky-thing #chart1 {
+      opacity: 0;
+    }
+
+    .step.active ~ .sticky-thing #chart2 {
+      opacity: 1;
+    }
+
     .steps-container {
       width: 40%;
       display: flex;
       flex-direction: column;
-      justify-content: center; /* Align steps vertically center */
+      justify-content: center;
     }
-  
-    /* Step adjustments - centered with chart */
+
     .step {
-      margin: 40vh 0; /* Creates space between steps */
+      margin: 40vh 0;
       padding: 25px;
       background: rgba(255, 255, 255, 0.95);
       border-left: 4px solid #e74c3c;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      transform: translateY(-50%); /* Precise vertical alignment */
+      transform: translateY(-50%);
     }
 
-        /* Previous styles remain the same, but add: */
-    .sticky-thing {
-        position: relative;
-        height: 100vh;
-    }
-    
-    .chart-container {
-        position: absolute;
-        width: 100%;
-        height: 80vh;
-        transition: opacity 0.5s ease;
-    }
-    
-    #chart1 {
-        opacity: 1;
-        z-index: 2;
-    }
-    
-    #chart2 {
-        opacity: 0;
-        z-index: 1;
-    }
-    
-    .step.active ~ .sticky-thing #chart1 {
-        opacity: 0;
-    }
-    
-    .step.active ~ .sticky-thing #chart2 {
-        opacity: 1;
-    }
-    
     /* Responsive design */
     @media (max-width: 900px) {
       .scrolly-container {
@@ -198,74 +187,70 @@
         transform: none;
       }
     }
-
   </style>
-  <link href="scrolly-styles.css" rel="stylesheet">
-  <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/3.2.0/scrollama.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js"></script>
 </head>
 
 <body>
   <div class="content">
     <div class="header">
-      <h1>This is a scrollytelling template where images change in the background</h1>
-      <p class="subhead">Here is the subhead or additional content you want to add in</p>
+      <h1>U.S. Pork Exports to China: A Shrinking Market Share</h1>
+      <p class="subhead">How competitors captured China's pork import market</p>
     </div>
     <div class="byline">
       <p>By <a href="https://yatingw24.github.io/">Yating Wang</a></p>
     </div>
-    <p>Pork is the backbone of Chinese diets - economical, protein-rich, and deeply cultural. From street-food dumplings to braised belly, it delivers accessible nutrition to hundreds of millions. Despite price fluctuations and modest declines in meat consumption share, as shown in a recent research, pork still accounts for over half of consumer meat expenditures in China. </p>
+    
+    <p>Pork is the backbone of Chinese diets - economical, protein-rich, and deeply cultural. From street-food dumplings to braised belly, it delivers accessible nutrition to hundreds of millions. Despite price fluctuations and modest declines in meat consumption share, as shown in a recent research, pork still accounts for over half of consumer meat expenditures in China.</p>
 
-    <p>In the past decade, the U.S. has been one of China’s top pork suppliers, exporting both muscle meat and edible offals like pig feet. But that trade relationship is now under threat. After President Trump raised the total tariff to 104% on all Chinese imports, China retaliated with another round of tariff, resulting in a total 84% tariff on imported U.S. goods, according to the Office of the Tariff Commission of the State Council.</p>
-
+    <p>In the past decade, the U.S. has been one of China's top pork suppliers, exporting both muscle meat and edible offals like pig feet. But that trade relationship is now under threat. After President Trump raised the total tariff to 104% on all Chinese imports, China retaliated with another round of tariff, resulting in a total 84% tariff on imported U.S. goods, according to the Office of the Tariff Commission of the State Council.</p>
   </div>
-
 
   <section id="scrolly-images" class="scrolly-container">
     <div class="sticky-thing">
       <div class="chart-container" id="chart1">
-        <iframe src="https://datawrapper.dwcdn.net/CHART1_ID/" width="100%" height="100%" frameborder="0"></iframe>
+        <!-- REPLACE WITH YOUR FIRST CHART URL -->
+        <iframe src="https://datawrapper.dwcdn.net/X2Int/1/" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
       </div>
       <div class="chart-container" id="chart2">
-        <iframe src="https://datawrapper.dwcdn.net/CHART2_ID/" width="100%" height="100%" frameborder="0"></iframe>
+        <!-- REPLACE WITH YOUR SECOND CHART URL -->
+        <iframe src="https://datawrapper.dwcdn.net/ABC123/1/" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
       </div>
       <figcaption>U.S. Pork Lean Cut Exports to China (2016–2024)</figcaption>
     </div>
     
     <div class="steps-container">
       <div class="step" id="step1">
-        <p>Initial market conditions...</p>
+        <p>In 2016-2018, the U.S. and Canada were China's primary pork suppliers, with the U.S. holding steady at about 22-25% market share.</p>
       </div>
       <div class="step" id="step2">
-        <p>African Swine Fever impact...</p>
+        <p>The U.S. emerged as a top beneficiary during the 2019-2020 African Swine Fever crisis, when China's domestic production plummeted by 40%.</p>
       </div>
-      <!-- Add more steps as needed -->
+      <div class="step" id="step3">
+        <p>By 2021, competitors like Brazil and Spain began capturing market share as China diversified its pork sources.</p>
+      </div>
+      <div class="step" id="step4">
+        <p>Trade tensions and higher tariffs made U.S. pork less competitive, with market share dropping to 7.7% by 2022.</p>
+      </div>
+      <div class="step" id="step5">
+        <p>In 2024, Canada has regained dominance with 77% share, while the U.S. accounts for less than 5% of China's pork imports.</p>
+      </div>
     </div>
   </section>
 
-
-
   <div class="content">
-    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-      aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
-      enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-      ratione voluptatem sequi nesciunt.</p>
+    <p>The decline of U.S. pork exports to China represents a significant shift in global agricultural trade patterns. As Chinese consumers continue to demand high-quality pork products, American producers face increasing competition from other exporting nations that have capitalized on the U.S.-China trade tensions.</p>
+    
     <figure>
-      <img
-        src="https://static01.nyt.com/images/2024/02/01/multimedia/01eu-hungary-orban-2-ghkw/01eu-hungary-orban-2-ghkw-superJumbo.jpg?quality=75&auto=webp">
-      <figcaption>This is an image caption</figcaption>
+      <img src="https://static01.nyt.com/images/2024/02/01/multimedia/01eu-hungary-orban-2-ghkw/01eu-hungary-orban-2-ghkw-superJumbo.jpg?quality=75&auto=webp">
+      <figcaption>Pork remains central to Chinese cuisine and culture</figcaption>
     </figure>
-    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non
-      numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
-      veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-    </p>
+    
+    <p>Experts suggest that regaining market share will require not only resolution of trade disputes but also significant investment in marketing and relationship-building with Chinese importers and consumers.</p>
   </div>
-
 
   <div class="footer">
     <div class="content">
-      <p>You can find the code for this story <a href="https://github.com/yatingw24/exports">here</a>.
+      <p>You can find the code for this story <a href="https://github.com/yatingw24/exports">here</a>.</p>
     </div>
   </div>
 
@@ -282,8 +267,8 @@
         .onStepEnter(({ element }) => {
           element.classList.add('active');
           
-          // Switch to highlighted chart at specific step
-          if(element.id === "step3") { // Change this to your trigger step
+          // Switch to highlighted chart at step3
+          if(element.id === "step3") {
             document.querySelector('#chart1').style.opacity = 0;
             document.querySelector('#chart2').style.opacity = 1;
           }
@@ -291,17 +276,15 @@
         .onStepExit(({ element }) => {
           element.classList.remove('active');
           
-          // Revert to original chart when scrolling back
+          // Revert to original chart when scrolling back past step3
           if(element.id === "step3") {
             document.querySelector('#chart1').style.opacity = 1;
             document.querySelector('#chart2').style.opacity = 0;
           }
         });
-  
+
       window.addEventListener("resize", scroller.resize);
     })();
   </script>
-
 </body>
-
 </html>
