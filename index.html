@@ -95,47 +95,59 @@
       background: #fff880;
     }
 
-    /* Main container layout */
+        /* Main container layout */
     .scrolly-container {
         display: flex;
         width: 100%;
-        gap: 20px; /* Space between chart and steps */
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 30px;
     }
 
     /* Chart container (left side) */
     .sticky-thing {
         position: sticky;
-        top: 0;
-        width: 60%; /* Takes 60% of page width */
-        height: 100vh; /* Full viewport height */
+        top: 20px;
+        width: 60%;
+        height: 100vh;
         display: flex;
-        align-items: center; /* Vertically center */
-        padding: 20px;
-        box-sizing: border-box;
+        flex-direction: column;
+        justify-content: center;
     }
 
     /* Datawrapper iframe adjustments */
     .sticky-thing iframe {
         width: 100% !important;
-        height: 80vh !important; /* Slightly less than full height for padding */
+        height: 70vh !important;
         border: none;
+    }
+
+    /* Chart caption styling */
+    .sticky-thing figcaption {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        padding: 10px 0;
+        line-height: 1.4;
     }
 
     /* Steps container (right side) */
     .steps-container {
-        width: 40%; /* Takes remaining 40% */
+        width: 40%;
         padding-right: 20px;
     }
 
     /* Step adjustments */
     .step {
-        margin-bottom: 50vh;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.8); /* Optional: make text more readable */
+        margin-bottom: 60vh;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.9);
+        border-left: 4px solid #e74c3c;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-    /* Responsive adjustment for smaller screens */
-    @media (max-width: 768px) {
+    /* Responsive design */
+    @media (max-width: 900px) {
         .scrolly-container {
         flex-direction: column;
         }
@@ -145,11 +157,15 @@
         .sticky-thing {
         height: auto;
         position: relative;
+        top: 0;
+        margin-bottom: 30px;
         }
         .sticky-thing iframe {
-        height: 400px !important;
+        height: 500px !important;
         }
-
+        .step {
+        margin-bottom: 30vh;
+        }
     }
   </style>
   <link href="scrolly-styles.css" rel="stylesheet">
@@ -174,31 +190,28 @@
   </div>
   <section id="scrolly-images" class="scrolly-container">
     <div class="sticky-thing">
-        <figure>
-            <iframe src="https://datawrapper.dwcdn.net/X2Int/1/" width="100%" height="400" frameborder="0"></iframe>
-        </figure>
+      <figure>
+        <iframe src="https://datawrapper.dwcdn.net/X2Int/1/" width="100%" height="400" frameborder="0"></iframe>
+        <figcaption>U.S. Pork Lean Cut Exports to China Plummet as Competitors Expand Market Share<br>
+        Share of Chinese pork lean cut imports in percentage by top suppliers (2016–2024)</figcaption>
+      </figure>
     </div>
+    
     <div class="steps-container">
       <div class="step" id="step1">
-        <div>
-          <p>Step one, adjust the CSS at the bottom of this page to change spacing between steps.</p>
-          <p>Here is some more text, in case there are multiple paragraphs.</p>
-        </div>
+        <p>In 2016, the U.S. was the dominant supplier of pork lean cuts to China, capturing nearly 30% of imports.</p>
       </div>
       <div class="step" id="step2">
-        <p>Find the JavaScript code near the bottom to associate each step with an image change.</p>
+        <p>By 2018, Brazilian competitors began gaining market share as China diversified its pork sources.</p>
       </div>
       <div class="step" id="step3">
-        <p>By default, the steps are a set width and the text is left-centered. Find the rule in
-          <code>scrolly-styles.css</code> that refers to <code>.step > *</code> to adjust or remove the width, center
-          the text, or change the background color/opacity.
-        </p>
+        <p>The 2019 African Swine Fever outbreak created both opportunities and challenges for U.S. exporters.</p>
       </div>
       <div class="step" id="step4">
-        <p>Step four, lorem ipsum dolor sic amet.</p>
+        <p>Trade tensions and tariffs in 2020-2022 accelerated the decline of U.S. market share.</p>
       </div>
       <div class="step" id="step5">
-        <p>Step five, lorem ipsum dolor sic amet.</p>
+        <p>By 2024, Brazil and EU suppliers have captured most of the market, leaving the U.S. with less than 5% share.</p>
       </div>
     </div>
   </section>
@@ -254,18 +267,6 @@
   </div>
 
 
-
-
-
-
-  <div class="content">
-    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
-      corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
-      qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
-    <p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio
-      cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor
-      repellendus.</p>
-  </div>
   <div class="footer">
     <div class="content">
       <p>You can find the code for this story <a href="https://github.com/yatingw24/exports">here</a>.
