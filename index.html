@@ -286,28 +286,34 @@
 
   <script>
     (() => {
-      const scroller = scrollama();
-      
-      scroller
+        const scroller = scrollama();
+        
+        scroller
         .setup({
-          parent: document.querySelector("#scrolly-images"),
-          step: ".step",
-          offset: 0.6
+            parent: document.querySelector("#scrolly-images"),
+            step: ".step",
+            offset: 0.6
         })
         .onStepEnter(({ element }) => {
-          element.classList.add('active');
-          
-          // Switch to highlighted chart at step3
-          if(element.id === "step2") {
+            element.classList.add('active');
+            
+            // Only switch charts at step2
+            if(element.id === "step2") {
             document.querySelector('#chart1').style.opacity = 0;
             document.querySelector('#chart2').style.opacity = 1;
-          }
+            }
         })
         .onStepExit(({ element }) => {
-          element.classList.remove('active');
+            element.classList.remove('active');
+            
+            // Only revert charts when exiting step2
+            if(element.id === "step2") {
+            document.querySelector('#chart1').style.opacity = 1;
+            document.querySelector('#chart2').style.opacity = 0;
+            }
+        });
 
-
-      window.addEventListener("resize", scroller.resize);
+        window.addEventListener("resize", scroller.resize);
     })();
   </script>
 </body>
