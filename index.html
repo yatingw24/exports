@@ -283,14 +283,26 @@
   <script>
     (() => {
       const scroller = scrollama();
-      let chart2Active = false;
+      let activeStep = null;
       
       // Initialize based on screen size
-      if (window.innerWidth <= 900) {
-        // Mobile - show only chart2
-        document.querySelector('#chart1').style.display = 'none';
-        document.querySelector('#chart2').style.opacity = 1;
+      function initCharts() {
+        if (window.innerWidth <= 900) {
+          // Mobile - show only chart2
+          document.querySelector('#chart1').style.display = 'none';
+          document.querySelector('#chart2').style.display = 'block';
+          document.querySelector('#chart2').style.opacity = 1;
+        } else {
+          // Desktop - show both, start with chart1
+          document.querySelector('#chart1').style.display = 'block';
+          document.querySelector('#chart2').style.display = 'block';
+          document.querySelector('#chart1').style.opacity = 1;
+          document.querySelector('#chart2').style.opacity = 0;
+        }
       }
+      
+      // Initial setup
+      initCharts();
       
       scroller
         .setup({
@@ -298,40 +310,30 @@
           step: ".step",
           offset: 0.6
         })
-        .onStepEnter(({ element }) => {
+        .onStepEnter(({ element, index }) => {
           element.classList.add('active');
+          activeStep = index;
           
-          // Only switch charts on desktop
-          if(window.innerWidth > 900 && element.id === "step2") {
+          // Desktop behavior - switch to chart2 at step2 and keep it
+          if(window.innerWidth > 900 && index >= 1) {
             document.querySelector('#chart1').style.opacity = 0;
             document.querySelector('#chart2').style.opacity = 1;
-            chart2Active = true;
           }
         })
-        .onStepExit(({ element }) => {
+        .onStepExit(({ element, index }) => {
           element.classList.remove('active');
           
-          // Only revert on desktop
-          if(window.innerWidth > 900 && element.id === "step2" && chart2Active) {
+          // Desktop behavior - revert only when going back to step1 or before
+          if(window.innerWidth > 900 && index <= 1) {
             document.querySelector('#chart1').style.opacity = 1;
             document.querySelector('#chart2').style.opacity = 0;
-            chart2Active = false;
           }
         });
   
       // Handle window resize
       window.addEventListener("resize", () => {
         scroller.resize();
-        if (window.innerWidth <= 900) {
-          // Mobile - show only chart2
-          document.querySelector('#chart1').style.display = 'none';
-          document.querySelector('#chart2').style.opacity = 1;
-        } else {
-          // Desktop - restore both charts
-          document.querySelector('#chart1').style.display = 'block';
-          document.querySelector('#chart1').style.opacity = 1;
-          document.querySelector('#chart2').style.opacity = 0;
-        }
+        initCharts();
       });
     })();
   </script>
