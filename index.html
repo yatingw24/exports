@@ -95,78 +95,88 @@
       background: #fff880;
     }
 
-        /* Main container layout */
+    /* Main container layout */
     .scrolly-container {
-        display: flex;
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        gap: 30px;
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 30px;
     }
-
+  
     /* Chart container (left side) */
     .sticky-thing {
-        position: sticky;
-        top: 20px;
-        width: 60%;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+      position: sticky;
+      top: 0;
+      width: 60%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Prevent scrollbar */
     }
-
+  
     /* Datawrapper iframe adjustments */
     .sticky-thing iframe {
-        width: 100% !important;
-        height: 70vh !important;
-        border: none;
+      width: 100% !important;
+      height: 80vh !important; /* Fits viewport without scrolling */
+      border: none;
     }
-
+  
     /* Chart caption styling */
     .sticky-thing figcaption {
-        text-align: center;
-        font-size: 14px;
-        color: #666;
-        padding: 10px 0;
-        line-height: 1.4;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      padding: 10px 20px;
+      line-height: 1.4;
+      max-width: 90%;
     }
-
+  
     /* Steps container (right side) */
     .steps-container {
-        width: 40%;
-        padding-right: 20px;
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Align steps vertically center */
     }
-
-    /* Step adjustments */
+  
+    /* Step adjustments - centered with chart */
     .step {
-        margin-bottom: 60vh;
-        padding: 25px;
-        background: rgba(255, 255, 255, 0.9);
-        border-left: 4px solid #e74c3c;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin: 40vh 0; /* Creates space between steps */
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.95);
+      border-left: 4px solid #e74c3c;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transform: translateY(-50%); /* Precise vertical alignment */
     }
-
+  
     /* Responsive design */
     @media (max-width: 900px) {
-        .scrolly-container {
+      .scrolly-container {
         flex-direction: column;
-        }
-        .sticky-thing, .steps-container {
+      }
+      .sticky-thing, .steps-container {
         width: 100%;
-        }
-        .sticky-thing {
+      }
+      .sticky-thing {
         height: auto;
         position: relative;
-        top: 0;
-        margin-bottom: 30px;
-        }
-        .sticky-thing iframe {
+        margin-bottom: 0;
+      }
+      .sticky-thing iframe {
         height: 500px !important;
-        }
-        .step {
-        margin-bottom: 30vh;
-        }
+      }
+      .steps-container {
+        justify-content: flex-start;
+      }
+      .step {
+        margin: 20px 0;
+        transform: none;
+      }
     }
+
   </style>
   <link href="scrolly-styles.css" rel="stylesheet">
   <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
@@ -188,18 +198,31 @@
     <p>In the past decade, the U.S. has been one of China’s top pork suppliers, exporting both muscle meat and edible offals like pig feet. But that trade relationship is now under threat. After President Trump raised the total tariff to 104% on all Chinese imports, China retaliated with another round of tariff, resulting in a total 84% tariff on imported U.S. goods, according to the Office of the Tariff Commission of the State Council.</p>
 
   </div>
+  
   <section id="scrolly-images" class="scrolly-container">
     <div class="sticky-thing">
       <figure>
-        <iframe src="https://datawrapper.dwcdn.net/X2Int/1/" width="100%" height="400" frameborder="0"></iframe>
+        <iframe src="https://datawrapper.dwcdn.net/X2Int/1/" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
         <figcaption>U.S. Pork Lean Cut Exports to China Plummet as Competitors Expand Market Share<br>
-        Share of Chinese pork lean cut imports in percentage by top suppliers (2016–2024)</figcaption>
+        Share of China's pork lean cut imports in percentage by top suppliers (2016–2024)</figcaption>
       </figure>
     </div>
     
     <div class="steps-container">
       <div class="step" id="step1">
-        <p>The U.S. emerged as a top beneficiary during the African Swine Fever crisis between 2019 and 2020, when the supply shock turned China into the world’s largest pork importer overnight. </p>
+        <p>In 2016-2018, the U.S. and Canada were China's primary pork suppliers, with the U.S. holding steady at about 22-25% market share.</p>
+      </div>
+      <div class="step" id="step2">
+        <p>The U.S. emerged as a top beneficiary during the 2019-2020 African Swine Fever crisis, when China's domestic production plummeted by 40%.</p>
+      </div>
+      <div class="step" id="step3">
+        <p>By 2021, competitors like Brazil and Spain began capturing market share as China diversified its pork sources.</p>
+      </div>
+      <div class="step" id="step4">
+        <p>Trade tensions and higher tariffs made U.S. pork less competitive, with market share dropping to 7.7% by 2022.</p>
+      </div>
+      <div class="step" id="step5">
+        <p>In 2024, Canada has regained dominance with 77% share, while the U.S. accounts for less than 5% of China's pork imports.</p>
       </div>
     </div>
   </section>
@@ -253,28 +276,21 @@
     This part attaches a scroll to the element with id="scrolly-images"    
     */
     (() => {
-      const scroller = scrollama()
-
-      scroller
+    const scroller = scrollama();
+    scroller
         .setup({
-          parent: document.querySelector("#scrolly-images"),
-          step: ".step",
-          offset: 0.6
+        parent: document.querySelector("#scrolly-images"),
+        step: ".step",
+        offset: 0.5 // Center trigger point
         })
-        .onStepEnter(function ({ element, index, direction }) {
-          const event = new CustomEvent("stepin", { detail: { direction: direction } })
-          element.dispatchEvent(event)
+        .onStepEnter(({ element }) => {
+        element.classList.add('active');
         })
-        .onStepExit(function ({ element, index, direction }) {
-          const event = new CustomEvent("stepout", { detail: { direction: direction } })
-          if (direction === "up" && element.previousElementSibling) {
-            const event = new CustomEvent("stepin", { detail: { direction: direction } })
-            element.previousElementSibling.dispatchEvent(event)
-          }
-        })
-
-      window.addEventListener("resize", scroller.resize)
-    })()
+        .onStepExit(({ element }) => {
+        element.classList.remove('active');
+        });
+    window.addEventListener("resize", scroller.resize);
+    })();
 
     /*
     This part sets up your actions. In this case, it's changing the image in the scrolly container.
