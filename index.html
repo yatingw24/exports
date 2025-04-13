@@ -311,7 +311,7 @@
 
   </div>
 
-  <section id="scrolly-images" class="scrolly-container">
+  <section id="scrolly-images-2" class="scrolly-container">
     <div class="sticky-thing">
       <div class="chart-container" id="chart1">
         <iframe src="https://datawrapper.dwcdn.net/2sfsQ/1/" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
@@ -360,73 +360,119 @@
 
   <script>
     (() => {
-      const scroller = scrollama();
-      let currentChart = 'chart1'; // Track current chart state
-      
-      function setChart(chart) {
-        if (currentChart === chart) return;
-        currentChart = chart;
-        document.querySelector('#chart1').style.opacity = chart === 'chart1' ? 1 : 0;
-        document.querySelector('#chart2').style.opacity = chart === 'chart2' ? 1 : 0;
-      }
-  
-      // Initialize based on screen size
-      function initCharts() {
-        if (window.innerWidth <= 900) {
-          // Mobile - show only chart2
-          document.querySelector('#chart1').style.display = 'none';
-          document.querySelector('#chart2').style.display = 'block';
-          setChart('chart2');
+    // Initialize first scrolly section
+    const scroller1 = scrollama();
+    let currentChart1 = 'chart1';
+    
+    // Initialize second scrolly section
+    const scroller2 = scrollama();
+    let currentChart2 = 'chart1';
+    
+    function setChart(section, chart) {
+        if (section === 1) {
+            if (currentChart1 === chart) return;
+            currentChart1 = chart;
+            document.querySelector('#scrolly-images #chart1').style.opacity = chart === 'chart1' ? 1 : 0;
+            document.querySelector('#scrolly-images #chart2').style.opacity = chart === 'chart2' ? 1 : 0;
         } else {
-          // Desktop - show both, start with chart1
-          document.querySelector('#chart1').style.display = 'block';
-          document.querySelector('#chart2').style.display = 'block';
-          setChart('chart1');
+            if (currentChart2 === chart) return;
+            currentChart2 = chart;
+            document.querySelector('#scrolly-images-2 #chart1').style.opacity = chart === 'chart1' ? 1 : 0;
+            document.querySelector('#scrolly-images-2 #chart2').style.opacity = chart === 'chart2' ? 1 : 0;
         }
-      }
-      
-      // Initial setup
-      initCharts();
-      
-      scroller
+    }
+    
+    // Initialize charts based on screen size
+    function initCharts() {
+        if (window.innerWidth <= 900) {
+            // Mobile - show only chart2
+            document.querySelectorAll('#chart1').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('#chart2').forEach(el => {
+                el.style.display = 'block';
+                el.style.opacity = '1';
+            });
+        } else {
+            // Desktop - show both, start with chart1
+            document.querySelectorAll('#chart1').forEach(el => {
+                el.style.display = 'block';
+                el.style.opacity = '1';
+            });
+            document.querySelectorAll('#chart2').forEach(el => {
+                el.style.display = 'block';
+                el.style.opacity = '0';
+            });
+        }
+    }
+    
+    // Initial setup
+    initCharts();
+    
+    // Setup first scroller
+    scroller1
         .setup({
-          parent: document.querySelector("#scrolly-images"),
-          step: ".step",
-          offset: 0.6,
-          progress: true // Enable progress tracking
+            parent: document.querySelector("#scrolly-images"),
+            step: "#scrolly-images .step",
+            offset: 0.6,
+            progress: true
         })
         .onStepProgress(({ element, index, progress }) => {
-          // Smooth transition between steps
-          if (window.innerWidth > 900) {
-            if (index >= 1) { // From step2 onward
-              setChart('chart2');
-            } else if (index === 0 && progress < 0.5) {
-              setChart('chart1');
+            if (window.innerWidth > 900) {
+                if (index >= 1) {
+                    setChart(1, 'chart2');
+                } else if (index === 0 && progress < 0.5) {
+                    setChart(1, 'chart1');
+                }
             }
-          }
         })
         .onStepEnter(({ element, index }) => {
-          element.classList.add('active');
-          
-          // Desktop - switch to chart2 at step2 and keep it
-          if (window.innerWidth > 900 && index >= 1) {
-            setChart('chart2');
-          }
+            element.classList.add('active');
+            if (window.innerWidth > 900 && index >= 1) {
+                setChart(1, 'chart2');
+            }
         })
         .onStepExit(({ element, index }) => {
-          element.classList.remove('active');
-          
-          // Desktop - revert only when going back to step1
-          if (window.innerWidth > 900 && index === 0) {
-            setChart('chart1');
-          }
+            element.classList.remove('active');
+            if (window.innerWidth > 900 && index === 0) {
+                setChart(1, 'chart1');
+            }
         });
-  
-      // Handle window resize
-      window.addEventListener("resize", () => {
-        scroller.resize();
+    
+    // Setup second scroller
+    scroller2
+        .setup({
+            parent: document.querySelector("#scrolly-images-2"),
+            step: "#scrolly-images-2 .step",
+            offset: 0.6,
+            progress: true
+        })
+        .onStepProgress(({ element, index, progress }) => {
+            if (window.innerWidth > 900) {
+                if (index >= 1) {
+                    setChart(2, 'chart2');
+                } else if (index === 0 && progress < 0.5) {
+                    setChart(2, 'chart1');
+                }
+            }
+        })
+        .onStepEnter(({ element, index }) => {
+            element.classList.add('active');
+            if (window.innerWidth > 900 && index >= 1) {
+                setChart(2, 'chart2');
+            }
+        })
+        .onStepExit(({ element, index }) => {
+            element.classList.remove('active');
+            if (window.innerWidth > 900 && index === 0) {
+                setChart(2, 'chart1');
+            }
+        });
+    
+    // Handle window resize
+    window.addEventListener("resize", () => {
+        scroller1.resize();
+        scroller2.resize();
         initCharts();
-      });
+    });
     })();
   </script>
 </body>
