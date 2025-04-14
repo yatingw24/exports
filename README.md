@@ -71,8 +71,8 @@ public %>%
 3. Combined the dataframe for private schools and public schools together using `rbind()`.
 4. Stacked density plots for each type of university to compared the gap between the median English PhD stipend. 
 
-### Making Ggplot!
-#### 1st - A Line Chart showing the Growing Stipend Gap Between Disciplines 
+### Visuals
+#### 1st -  
 1. Converted the `cleaned_output.csv` into a dataframe and make multiple boxplots to the distribution of **median stipend** by discipline and by time. As the statistical summary revealed, each discipline's stipend is more or less normally distributed. Either median and mean could be a fair representation of the overall stipend. 
 ![Chart](static_imgs/boxplot.png)
 2. Named a new dataframe called `df_median` grouped by `Academic Year` and `Field`. `summarize()` is used to ensure all data entries are median stipend for a specific major in a specific academic year.
@@ -83,7 +83,7 @@ public %>%
 - y-axis: median stipend in $;
 - highlighted area: academic years affected by the pandemic.
 
-#### 2nd - A Vertical Bar Chart Comparing the Percentage of Debted Students in Each Major
+#### 2nd - 
 1. Loaded the data, `debt.csv` and went straight to making ggplot using `geom_bar`.
 2. Given that I'd like to represent the percentage, I need to have the bar background go to 100%. As a result, I required `library(scales)` and set my my x-axis' scale from 0 to 1.
 3. Colored each major accordingly to the disciple each belongs to and made sure the title matches the color-coding as well. 
@@ -91,14 +91,11 @@ public %>%
 - x-axis: the percentage of debted students;
 - y-axis: The major.
 
-#### 3rd - A Treemap About the Amount of PhD Candidates by Discipline
-1. Loaded the data, `cleaned_output.csv`, and required `library(treemapify)` to enable the treemap graphing function.
-2. The area is a straightfoward representation of how many students are enrolled in which discipline.  
+#### 3rd -
 
-#### 4th - Two Density Plots for Showing the Financial Support by Types of Institutions
-1. In Prof Weiskott's research, he made two separate spreadsheets in order to reveal the difference in stipend offered to English PhD at public universities and private universities. 
-2. Since stipends are a continuous variable, using a distribution plot (density plot) is more effective for visualizing variations in financial support across institutions. This allows for an easier comparison of stipend ranges, central tendencies, and overall distribution patterns between public and private universities.
-3. Distributions of English Stipend in public and private universities are plotted with `geom_density` and `facet_wrap` to show them at once. 
+
+#### 4th - 
+
 
 
 ### Skills Newly Acquired
