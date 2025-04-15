@@ -9,9 +9,9 @@ Data:
 
 
 ## Key Takeaways 
-Except for Business PhDs, stipends in other disciplines fall below the 2024 U.S. median cost of living ($3,851/month) and are quickly drained by basic expenses;
+While the U.S. may find new markest to continue exporting its pork lean cuts, pork facilities will experience a more difficult time dealing with pork offals. 
 
-Students in Humanities, Arts and Social Sciences can hardly earn a stipend that would catch up with candidates in STEM and Business majors for almost a decade;
+Both China and U.S. are adjusting their pork supply chain. 
 
 A PhD student's stipend is not necessarily tied to their year in the program;
 
@@ -38,30 +38,6 @@ A PhD student's stipend is not necessarily tied to their year in the program;
  - `phd_stipends.csv`: the original dataset that contains all financial information about nationalwide stipends across discipines. 
  - static_imgs: charts and graphics you find in my article.
   - `privater.csv` and `public.csv`: data about English PhD stipends in public universities and private universities. 
-
-### Data Cleaning and Analysis 
-#### Part I: Understanding the Stipend Gap Between Disciplines
-
-
-
-#### Part II: Educational Debt by Discipline
-1. Calculated the percentage of debted students for each discipline using spreadsheet mathematic formulas. 
-
-#### Part III: The Comparison Between Stipend Offered by Private and Public Universities
-1. Since I'd like to practice data analysis and cleaning in R, I loaded the data in R;
-2. Replaced all signs, such as the dollar sign $, and converted the stipend into numeric numbers using `mutate()` function in R. Here is a sample code:
-
-```python 
-public %>%
-  mutate(
-    `Amount_USD` = gsub(",", "", `Amount_USD`),   
-    `Amount_USD` = gsub("\\$", "", `Amount_USD`), 
-    `Amount_USD` = as.integer(`Amount_USD`)       
-  )
-
-  ```
-3. Combined the dataframe for private schools and public schools together using `rbind()`.
-4. Stacked density plots for each type of university to compared the gap between the median English PhD stipend. 
 
 ### Visuals
 #### 1st -  
@@ -90,9 +66,5 @@ public %>%
 
 
 ## Limitations & Things I'd Like to Improve
-1. This is a data-driven project done with a limited amount of time - I would interview PhD candidates from public universities to understand their stipend and how they support themselves financially;
-2. While this analysis compares stipends to the U.S. median cost of living ($3,851/month in 2024), the actual living costs vary widely by location. Future work could involve curating a new dataset on regional stipend differences and visualizing geographic disparities in financial support for PhD students. 
-3. While I applied a stipend range filter (15,000–90,000), I could have used more systematic outlier detection methods, such as boxplots or IQR filtering to assess the impact of extreme values.
- 
-
- 
+1. This is a data-driven project done with a limited amount of time - I would interview pork facilities and farmers to understand if there is already a chilling effect. 
+2. Visual-wise, 
