@@ -3,9 +3,9 @@ Trump's recent decision to slash funding to research institutions and health sys
 
 Here is the shortcut to my [article:](https://yatingw24.github.io/exports/)
 
-A great thank to my data sources:
-- [PhD Stipends](https://www.phdstipends.com/) for sharing the financial information about PhD students in many disciplines at universities across the US in different academic years.
-- [A statistical Report on English PhD Stipends in the US](https://profession.mla.org/english-phd-stipends-in-the-united-states-statistical-report/) for collecting data on stipends for PhD candidates in English conducted between summer 2021 and spring 2022.
+Data:
+- [Market Share in Chinese Pork Imports](http://stats.customs.gov.cn/indexEn)
+- [USDA Foreign Agricultural Service](https://apps.fas.usda.gov/GATS/default.aspx) 
 
 
 ## Key Takeaways 
@@ -95,12 +95,6 @@ public %>%
 
 
 #### 4th - 
-
-
-
-### Skills Newly Acquired
-1. Data analysis is not only done in Python/Pandas, but also in R using a variety of graphing functions such as `geom_bar()`, `geom_treemap()`.
-2. Widened both **my data sources** AND **my choices of chart types** to better convey the message with the most effective type.
 
 
 ## Limitations & Things I'd Like to Improve
