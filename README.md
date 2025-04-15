@@ -1,5 +1,5 @@
 # The US is Losing China's Pork Market 
-Trump's recent decision to slash funding to research institutions and health systems has sent shockwaves through academia. In response, many universities have been forced to halt new admissions, leaving students and faculty grappling with the fallout. However, the financial struggles for Humanities, Arts, and Social Science phD students date back much earlier, **long before this funding cut**. 
+Pork as one of the exportTrump's recent decision to slash funding to research institutions and health systems has sent shockwaves through academia. In response, many universities have been forced to halt new admissions, leaving students and faculty grappling with the fallout. However, the financial struggles for Humanities, Arts, and Social Science phD students date back much earlier, **long before this funding cut**. 
 
 Here is the shortcut to my [article:](https://yatingw24.github.io/exports/)
 
@@ -41,17 +41,9 @@ A PhD student's stipend is not necessarily tied to their year in the program;
 
 ### Data Cleaning and Analysis 
 #### Part I: Understanding the Stipend Gap Between Disciplines
-1. Opened `phd_stipends.csv` and dropped all irrelevant, confusing and null entries including NA and Non-English characters 
-2. Created a new column that categorizes majors into four primary disciplines: Business, Hard-core Science, Social Science and Humanities and Arts. For Humanities, here is a sample code:
-```python
-    df.loc[df["Department"].str.contains("A|B|C|...", case=False, na=True), "Field"] = "Humanities"
-```
-3. Set the range of monthly stipend to 15,000 and 90,000 to avoid  outliers. 
-4. Describe the statistical summary of monthly stipend for each discipline. Here is a sample code:
-```python
-df[df['Field'] == "Business"]['Overall Pay'].describe()
 
-```
+
+
 #### Part II: Educational Debt by Discipline
 1. Calculated the percentage of debted students for each discipline using spreadsheet mathematic formulas. 
 
