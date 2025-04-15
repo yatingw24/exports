@@ -1,5 +1,5 @@
 # The US is Losing China's Pork Market 
-Pork as one of the exportTrump's recent decision to slash funding to research institutions and health systems has sent shockwaves through academia. In response, many universities have been forced to halt new admissions, leaving students and faculty grappling with the fallout. However, the financial struggles for Humanities, Arts, and Social Science phD students date back much earlier, **long before this funding cut**. 
+Pork as one of the major US export sector now faces threats. Trump's recent decision to raise the tariff to an unprecedented level has pushed US' trade partners to retaliate even harsher. As one of the top pork buyers, China imposed a new round of tariff on US goods, including pork. The stakes are high for the U.S. pork industry under a volatile relationship between the U.S. and China.
 
 Here is the shortcut to my [article:](https://yatingw24.github.io/exports/)
 
